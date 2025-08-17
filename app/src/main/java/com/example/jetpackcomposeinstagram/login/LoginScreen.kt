@@ -1,6 +1,7 @@
 package com.example.jetpackcomposeinstagram.login
 
 import android.app.Activity
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -106,11 +107,13 @@ fun Body(modifier: Modifier) {
         Email(email) {
             email = it
             isLoginEnable = email.isNotEmpty() && password.isNotEmpty()
+            isLoginEnable=enableLogin(email, password)
         }
         Spacer(modifier = Modifier.size(4.dp))
         Password(password) {
             password = it
             isLoginEnable = email.isNotEmpty() && password.isNotEmpty()
+            isLoginEnable=enableLogin(email, password)
         }
         Spacer(modifier = Modifier.size(8.dp))
         Spacer(modifier = Modifier.size(16.dp))
@@ -189,6 +192,13 @@ fun LoginButton(loginEnable: Boolean) {
         Text(text = "Login")
     }
 }
+fun enableLogin(email: String, password: String): Boolean {
+    val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    val isPasswordValid = password.length >= 6
+    return isValidEmail && isPasswordValid
+}
+
+
 
 @Composable
 fun Email(email: String, onTextChange: (String) -> Unit) {
