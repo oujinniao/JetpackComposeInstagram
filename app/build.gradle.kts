@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.volley)
+    implementation("androidx.compose.runtime:runtime-livedata:1.9.0")
     implementation("androidx.compose.material:material-icons-extended:${compose_version}")
 
 

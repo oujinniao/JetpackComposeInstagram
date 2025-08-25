@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcomposeinstagram.login.LoginScreen
+import com.example.jetpackcomposeinstagram.login.LoginViewModel
 import com.example.jetpackcomposeinstagram.ui.theme.JetpackComposeInstagramTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +23,8 @@ class MainActivity : ComponentActivity() {
             JetpackComposeInstagramTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                        LoginScreen()
+                        LoginScreen(LoginViewModel())
+
 
 
                 }
