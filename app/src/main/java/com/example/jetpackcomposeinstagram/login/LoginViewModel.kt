@@ -1,5 +1,6 @@
 package com.example.jetpackcomposeinstagram.login
 
+import android.R.attr.password
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
@@ -9,10 +10,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.jetpackcomposeinstagram.login.domain.LoginUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel: ViewModel() {
-
-    val loginUseCase = LoginUseCase()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+     private val loginUseCase : LoginUseCase
+): ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
