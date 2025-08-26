@@ -1,5 +1,7 @@
-package com.example.jetpackcomposeinstagram.login
+package com.example.jetpackcomposeinstagram.login.ui
 
+import android.R.attr.onClick
+import android.R.attr.password
 import android.app.Activity
 import android.util.Patterns
 import androidx.compose.foundation.Image
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,6 +49,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeinstagram.R
+import com.example.jetpackcomposeinstagram.login.LoginViewModel
+import retrofit2.http.Body
 
 
 @Composable
@@ -55,9 +60,23 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
             .fillMaxSize()
             .padding(18.dp)
     ) {
+        val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
+        if(isLoading){
+                Box(
+                    Modifier
+                        .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                ) {
+                    // Text(text = "Cargando...")
+                    CircularProgressIndicator()
+                }
+            }else{
+
+
         Header(Modifier.align(Alignment.TopEnd))
-        Body(Modifier.align(Alignment.Center), loginViewModel)
+            Body(Modifier.align(Alignment.Center), loginViewModel)
         Footer(Modifier.align(Alignment.BottomCenter))
+    }
     }
 }
 
@@ -100,7 +119,7 @@ fun SignUp() {
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
     val email:String by loginViewModel.email.observeAsState(initial = "")
     val password by loginViewModel.password.observeAsState(initial = "")
-    val isLoginEnable by loginViewModel.isLoginEnable.observeAsState(initial = false)
+    val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
@@ -181,9 +200,9 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, function: () -> Unit) {
+fun LoginButton(loginEnable: Boolean, onClick: () -> Unit) {
     Button(
-        onClick = { },
+        onClick = onClick,
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
@@ -196,11 +215,11 @@ fun LoginButton(loginEnable: Boolean, function: () -> Unit) {
         Text(text = "Login")
     }
 }
-fun enableLogin(email: String, password: String): Boolean {
-    val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    val isPasswordValid = password.length >= 6
-    return isValidEmail && isPasswordValid
-}
+//fun enableLogin(email: String, password: String): Boolean {
+  //  val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    //val isPasswordValid = password.length >= 6
+    //return isValidEmail && isPasswordValid
+//}-esta es lógica de negocio, debe existir en el LoginViewModel
 
 
 
